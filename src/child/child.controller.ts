@@ -10,7 +10,7 @@ import {
 import { ChildService } from './child.service';
 import { ChildDto } from './dto';
 import { Child } from './type';
-import { IdDto, NameDto } from 'src/common/decorators';
+import { IdDto } from 'src/common/decorators';
 
 @Controller('child')
 export class ChildController {
@@ -21,37 +21,24 @@ export class ChildController {
     const generatedId = this.childService.insertChild(
       body.firstName,
       body.lastName,
-      body.parentId,
     );
     return { id: generatedId };
   }
 
   @Get()
   getAllChildren(): Child[] {
-    return this.childService.getChild().filter((child) => child.active);
+    return this.childService.getChild();
   }
 
   @Get(':id')
   getChildById(@Param() params: IdDto): Child {
-    const { id } = params;
     return this.childService.getSingleChild(params.id);
-  }
-
-  @Get('name/: name')
-  getChildByName(@Param() params: NameDto): Child[] {
-    const { name } = params;
-    return this.childService.getChild().filter((child) => child.name === name);
   }
 
   @Put(':id')
   updateChild(@Param() params: IdDto, @Body() body: ChildDto): Child {
     const { id } = params;
-    return this.childService.updateChild(
-      id,
-      body.firstName,
-      body.lastName,
-      body.parentId,
-    );
+    return this.childService.updateChild(id, body.firstName, body.lastName);
   }
 
   @Delete(':id')

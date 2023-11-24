@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class ParentDto {
   @IsString()
@@ -8,9 +8,4 @@ export class ParentDto {
   @IsString()
   @IsNotEmpty()
   lastName: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @IsUUID()
-  childId: string;
 }

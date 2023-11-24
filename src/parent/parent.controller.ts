@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ParentService } from './parent.service';
 import { ParentDto } from './dto';
-import { IdDto, NameDto } from 'src/common/decorators';
+import { IdDto } from 'src/common/decorators';
 import { Parent } from './type';
 
 @Controller('parent')
@@ -21,7 +21,6 @@ export class ParentController {
     const generatedId = this.parentService.insertParent(
       body.firstName,
       body.lastName,
-      body.childId,
     );
     return { id: generatedId };
   }
@@ -40,12 +39,7 @@ export class ParentController {
   @Put(':id')
   updateParent(@Param() params: IdDto, @Body() body: ParentDto): Parent {
     const { id } = params;
-    return this.parentService.updateParent(
-      id,
-      body.firstName,
-      body.lastName,
-      body.childId,
-    );
+    return this.parentService.updateParent(id, body.firstName, body.lastName);
   }
 
   @Delete(':id')

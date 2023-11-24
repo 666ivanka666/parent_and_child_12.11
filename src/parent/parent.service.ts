@@ -6,10 +6,10 @@ import { Parent } from './type';
 export class ParentService {
   private parents: Parent[] = [];
 
-  insertParent(firstName: string, lastName: string, childId: string): string {
+  insertParent(firstName: string, lastName: string): string {
     const parentId = uuidv4();
 
-    this.parents.push(new Parent(parentId, firstName, lastName, childId));
+    this.parents.push(new Parent(parentId, firstName, lastName));
     return parentId;
   }
   getParent(): Parent[] {
@@ -20,13 +20,7 @@ export class ParentService {
     return parent;
   }
 
-  updateParent(
-    parentId: string,
-    firstName: string,
-    lastName: string,
-    childId: string,
-  ): Parent {
-
+  updateParent(parentId: string, firstName: string, lastName: string): Parent {
     const [parent] = this.findParent(parentId);
     if (firstName) {
       parent.firstName = firstName;
@@ -34,9 +28,7 @@ export class ParentService {
     if (lastName) {
       parent.lastName = lastName;
     }
-    if (childId) {
-      parent.childId = childId;
-    }
+
     return parent;
   }
 
@@ -52,5 +44,9 @@ export class ParentService {
       throw new NotFoundException(`Parent with ID ${id} not found`);
     }
     return [this.parents[parentIndex], parentIndex];
+  }
+
+  assignChild(parent: Parent, childId: string) {
+    parent.childIds.push(childId);
   }
 }
