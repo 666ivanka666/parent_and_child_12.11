@@ -47,6 +47,9 @@ export class ParentService {
   }
 
   assignChild(parent: Parent, childId: string) {
+    if (!parent.childIds) {
+      parent.childIds = [];
+    }
     parent.childIds.push(childId);
   }
 }

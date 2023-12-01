@@ -48,6 +48,9 @@ export class ChildService {
   }
 
   assignParent(child: Child, parentId: string) {
+    if (!child.parentIds) {
+      child.parentIds = [];
+    }
     child.parentIds.push(parentId);
   }
 }
